@@ -1,1 +1,124 @@
-this is gonna be angular
+<!DOCTYPE HTML>
+<html>
+
+<!-- STYLE -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<!-- <link rel="stylesheet" type="text/css" href="lib/ng-tags-input/ng-tags-input.css"> -->
+<link rel="stylesheet" type="text/css" href="css/steezy.css">
+
+<!-- LIBS -->
+<script src="lib/angular.js"></script>
+<script src="lib/angular-ui-router.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="lib/bootstrap.js"></script>
+<script src="lib/ui-bootstrap-tpls-1.0.0.js"></script>
+<script src="lib/ng-tags-input/ng-tags-input.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('pk_test_sDkLQKl8hMzSFlVh34am3djx');
+  // ...
+</script>
+
+
+<!-- CONTROL -->
+<script src="js/controllers/appetizerController.js"></script>
+<script src="js/controllers/loginController.js"></script>
+
+<script src="js/services/foodService.js"></script>
+<script src="js/services/customerDataService.js"></script>
+<script src="js/services/dialogService.js"></script>
+
+<script src="js/directives/draggable.js"></script>
+
+<script src="js/app.js"></script>
+
+<title>AG Pizza & Resturant</title>
+
+<body ng-app="app">
+	<div class="container">
+
+		<a ui-sref="home">Home</a> <a ui-sref="appetizer">Appetizer</a>
+		<div class="row text-center">
+			<img class="text-center"
+				src="img/newheader.jpg">
+		</div>
+		<div class="row" ng-controller="loginCtrl">
+		
+		<div ng-show="customerItems.length >= 1" draggable style="width: 250px; height:500px;">
+		<h3>Delivery for: {{user.info.address.street}}</h3>
+			<ul class="list-group col-xs-12">
+				<li class="list-group-item" ng-repeat="item in customerItems track by $index">
+					{{item.name}}<span class="badge">{{item.price}}</span>
+				</li>
+				<li class="list-group-item">
+					Total: <span class="badge">{{getTotal()}}</span>
+				</li>
+			</ul>
+		<input type="button" value="checkout" ng-click="checkout()">
+		</div>
+			<div ng-show="user.loggedIn">
+				<div class="col-sm-10 col-xs-offset-1 nopadding row">
+					<div class="col-xs-7">
+						<h1 style="padding-left: 26px;">{{user.info.userName}}!<small> Select items from our menu to begin</small></h1>
+					</div>
+					<div class="col-xs-5">
+						<span>
+							<span ng-show="customerItems.length >= 1" class="badge" style="float: right; position: relative; right: -3px; top: 7px; background-color: rgba(119, 119, 119, 0.59); color: rgba(255, 255, 255, 0.51);">{{customerItems.length}}</span>
+							<img src="img/delivery-icon.png" uib-tooltip="View Cart" tooltip-placement="top-right" tooltip-animation="true" tooltip-popup-close-delay='1000' tooltip-is-open="viewCartMessage" tooltip-popup-delay="1000" style="float: right; height: 56px;margin-top: 10px; position: relative; right:-37px; cursor:pointer;">
+						</span>
+					</div>
+				</div>
+			</div>			
+			<div ng-hide="user.loggedIn">					
+				<div class="col-sm-10 col-xs-offset-1 nopadding">
+					<div class="col-xs-9 col-xs-offset-3" style="padding-right: 0px;">
+						<img src="img/Order-online-button-2.png" style="height: 24px;
+	   						 padding: none;width: 123px;padding: 0px;" class="btn" ng-click="loginShowForm = true;">
+						<form class="form-inline" style="float:right;" ng-keyup="$event.keyCode == 13 && login()">
+							<div class="form-group">
+								<label>username:</label> 
+								<input class="input-xs form-control" style="color: black; padding-left: 7px;" type="text" ng-model="loginModel.username">
+							</div>
+							<div class="form-group">
+								<label>password:</label> 
+								<input class="input-xs form-control" style="color: black; padding-left: 7px;" type="password" ng-model="loginModel.password">
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-xs btn-primary" value="Login" ng-click="login()">
+								<input type="button" class="btn btn-xs btn-success" value="Signup" ng-click="signUp()">
+							</div>
+						</form>
+					</div>
+				</div>	
+			</div>					
+		</div>
+
+		<div class="row">
+			<div class="col-xs-2 col-xs-offset-1">
+				<ul class="nav nav-pills nav-stacked" role="tablist">
+					<li><a ui-sref="appetizer">Appetizers</a></li>
+					<li><a href="#">Salads</a></li>
+					<li><a href="#">Dinners</a></li>
+					<li><a href="#">Cold Subs</a></li>
+					<li><a href="#">Hot Sandwiches</a></li>
+					<li><a href="#">Pizza</a></li>
+					<li><a href="#">Deep Dish</a></li>
+					<li><a href="#">Catering</a></li>
+					<li><a href="#">Beverages</a></li>
+					<li><a href="#">Lunch Specials</a></li>
+					<li><a href="#">Desserts Menu</a></li>
+					<li><a href="#">Printable Menu</a></li>
+				</ul>
+			</div>
+
+			<div class="col-xs-8" id="content" ui-view></div>
+		</div>
+
+	</div>
+</body>
+
+
+
+
+</html>

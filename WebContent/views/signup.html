@@ -1,0 +1,62 @@
+<div style="color: black;">
+	<div class="modal-header">
+		<h3>Signup and order pizza!</h3>
+	</div>
+	<div class="modal-body">
+		<form ng-keyup="$event.keyCode == 13 && submit()">
+			<div class="form-group">
+				<label for="exampleInputEmail1">User Name</label> 
+				<input type="text" class="form-control" id="exampleInputEmail1" ng-model="signup.userName"
+					placeholder="Email">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Password</label> <input
+					type="password" class="form-control" id="exampleInputPassword1" ng-model="signup.password"
+					placeholder="Password">
+			</div>
+			<div class="form-group row">
+				<label class="col-xs-12" for="exampleInputPassword1">Address</label> 
+				<div class="col-xs-4">
+					<input ng-model="signup.address.street" type="text" class="form-control" id="exampleInputPassword1" placeholder="Street">
+				</div>
+				<div class="col-xs-3">
+					<input ng-model="signup.address.city" type="text" class="form-control" id="exampleInputPassword1" placeholder="City">
+				</div>
+				<div class="col-xs-2">
+					<input ng-model="signup.address.state" type="text" class="form-control" id="exampleInputPassword1" placeholder="State">
+				</div>
+				<div class="col-xs-2">
+					<input ng-model="signup.address.zip" type="text" class="form-control" id="exampleInputPassword1" placeholder="Zip">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class=" col-xs-6">
+					<label for="exampleInputPassword1">Name on card</label> <input ng-model="signup.fullName"
+						type="text" class="form-control" id="exampleInputPassword1"
+						placeholder="Full Name">
+				</div>
+				<div class="col-xs-6">
+					<label for="exampleInputPassword1">Phone Number</label> <input
+						type="text" class="form-control" id="exampleInputPassword1" ng-model="signup.phone"
+						placeholder="Phone Number">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-xs-12" for="exampleInputPassword1">Card Information</label> 
+				<div class="col-xs-4">
+					<input ng-model="signup.card.number" type="text" class="form-control" id="exampleInputPassword1" placeholder="Card Number">
+				</div>
+				<div class="col-xs-3">
+					<input ng-model="signup.card.exp" type="text" class="form-control" id="exampleInputPassword1" placeholder="Exp: mm/yy">
+				</div>
+				<div class="col-xs-2">
+					<input ng-model="signup.card.cvc" type="text" class="form-control" id="exampleInputPassword1" placeholder="CVC">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="submit()">Submit</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

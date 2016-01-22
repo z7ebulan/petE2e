@@ -1,0 +1,88 @@
+<span class="row col-xs-12 nopadding">
+	<h5 class="col-xs-2 nopadding">~Appetizers~</h5>
+	<span class="row col-xs-2 col-xs-offset-8">
+		<button class="btn btn-default btn-xs" ng-click="showCreateForm()"><span>Create Appetizer</span></button>
+	</span>
+</span>
+
+<span ng-show="showForm" class="col-xs-12">
+<h3 class="nopadding">Create New Appetizer</h3></br>
+	<form name="createForm" class="col-xs-5 form-horizontal">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">Name: </label> 
+			<span class="col-xs-8 nopadding"><input class="form-control" type="text" placeholder="ex. mozz sticks" ng-model="appetizerObj.name"></span>		
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4 control-label">Price: </label> 
+			<div class="input-group col-xs-8">
+				<span class="input-group-addon">$</span>
+  				<input class="form-control" type="text" placeholder="ex. 5.10" ng-disabled="appitizerSizesForm" ng-model="appetizerObj.price">
+			</div>	
+		</div>	
+		<div class="form-group">
+			<input type="button" ng-click="createAppetizer()" value="Create Appetizer">
+			<input type="button" ng-click="addAppetizerSize()" value="Add Size" ng-disabled="!appitizerSizesForm">
+		</div>		
+	</form>
+	<form name="createForm" class="col-xs-5 form-horizontal" ng-show="appitizerSizesForm">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">Size: </label> 
+			<span class="col-xs-8 nopadding"><input class="form-control" type="text" placeholder="ex. large" ng-model="appetizerSize.size"></span>		
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4 control-label">Price: </label> 
+			<div class="input-group col-xs-8">
+				<span class="input-group-addon">$</span>
+  				<input class="form-control" type="text" placeholder="ex. 5.10" ng-model="appetizerSize.price">
+			</div>	
+		</div>	
+	</form>
+
+	<form name="createForm" class="col-xs-5 form-horizontal"style="padding-top: 54px;" ng-hide="appitizerSizesForm">
+		<div class="form-group">
+			<label class="col-xs-1 control-label">or </label> 
+			<div class="input-group col-xs-8" style="padding-top: 3px;padding-left: 7px;">
+				&nbsp;<button ng-click="appitizerSizesForm = true;"><span class="glyphicon glyphicon-plus"></span> Add Sizes</button>
+			</div>	
+		</div>			
+	</form>
+	<div class="col-xs-1">
+		<div ng-repeat="size in appetizerObj.appitizerSizes"><span class="badge">{{size.size}}</span></div>
+	</div>
+	
+</span>
+
+
+
+
+
+<ul ng-hide="showForm" class="list-group col-xs-12">
+<span ng-repeat="appy in appetizers" class="p2List">
+	<li class="list-group-item container-fluid nopadding col-xs-10">
+		<a class="p2ListItem" ng-mouseover="appy.hover=true" ng-mouseleave="appy.hover=false">
+			<span class="col-xs-12" ng-class="{p2ItemActive: appy.addInfo || appy.hover}">
+				<span class="col-xs-5">{{appy.name}}</span>
+				<span class="col-xs-3 col-xs-offset-3" ng-show="appy.appitizerSizes.length > 0">
+					<select ng-options="app.size for app in appy.appitizerSizes" ng-model="size" ng-change="selectedSize(appy, size)"></select>
+				</span>
+				<span class="col-xs-3 col-xs-offset-3" ng-hide="appy.appitizerSizes.length > 0"></span>
+				<span class="col-xs-1" ng-show="appy.price > 0">{{appy.price}}</span>
+			</span>
+			<span class="col-xs-12 p2ItemActive" ng-show="appy.addInfo">
+				<span class="col-xs-6">
+					<tags-input ng-model="appy.toppings" placeholder="Add a topping" display-property="name" key-property="id" >
+						<auto-complete source="loadToppings($query)" load-on-focus="true" load-on-empty="true"></auto-complete>
+					</tags-input>
+				</span>
+				<span class="col-xs-6">
+					<textarea class="form-control" style="margin-top: 5px;" rows="1" ng-model="appy.comments" placeholder="Additional information:"></textarea>
+				</span>
+			</span>
+		</a>
+	</li>
+	<span class="col-xs-2 p2ItemActions">
+		<img style="height: 20px" src="img/comment-button.png" uib-tooltip="special requests" ng-click="appy.addInfo=true">
+		<img style="height: 20px" src="img/plainicon.com-43939-512px.png" uib-tooltip="add to cart" ng-click="addToCart(appy)">
+	</span>
+</span>
+</ul>
